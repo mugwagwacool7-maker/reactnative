@@ -5,7 +5,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 import "./global.css";
-import "@/lib/appwrite-client";
+import { ping } from "@/lib/appwrite-client";
 import GlobalProvider from "@/lib/global-provider";
 import FavoritesProvider from "@/lib/favorites-provider";
 import AvatarProvider from "@/lib/avatar-provider";
@@ -30,6 +30,12 @@ export default function RootLayout() {
   useEffect(() => {
     const timer = setTimeout(() => setSplashReady(true), MIN_SPLASH_TIME);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    ping().then((result) =>
+      console.log("[appwrite] ping:", result.message)
+    );
   }, []);
 
   const appReady = fontsLoaded && splashReady;
