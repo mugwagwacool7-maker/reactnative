@@ -23,6 +23,7 @@ const Auth = () => {
 
   const handleLogin = async () => {
     const result = await login();
+    if (result.status === "redirecting") return;
     if (result.status === "success") {
       await refetch();
       router.replace("/");
@@ -31,9 +32,9 @@ const Auth = () => {
     }
   };
 
-  const onboardingHeight = Math.max(
-    280,
-    Math.min(Dimensions.get("window").height * 0.42, 380)
+  const illustrationSize = Math.min(
+    Dimensions.get("window").width - 32,
+    280
   );
 
   return (
@@ -45,12 +46,16 @@ const Auth = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Image
-          source={images.onboarding}
-          className="w-full mt-4"
-          style={{ height: onboardingHeight }}
-          resizeMode="contain"
-        />
+        <View className="w-full items-center justify-center mt-4 pt-6">
+          <Image
+            source={images.onboarding}
+            style={{
+              width: illustrationSize,
+              height: illustrationSize * (1104 / 799),
+            }}
+            resizeMode="contain"
+          />
+        </View>
 
         <View className="flex-1 px-8 pt-6">
           <Text className="text-xs font-rubik-semibold text-primary-300 text-center uppercase tracking-widest">
