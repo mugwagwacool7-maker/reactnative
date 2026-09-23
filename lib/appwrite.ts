@@ -10,7 +10,6 @@ import {
   AppwriteException,
 } from "react-native-appwrite";
 import { Models } from "react-native-appwrite";
-import { Platform } from "react-native";
 import * as Linking from "expo-linking";
 import { openAuthSessionAsync } from "expo-web-browser";
 
@@ -82,7 +81,6 @@ export interface PropertyDoc extends Models.Document {
 export type LoginResult =
   | { status: "success" }
   | { status: "canceled" }
-  | { status: "redirecting" }
   | { status: "error"; message: string };
 
 export async function login(): Promise<LoginResult> {
@@ -97,11 +95,6 @@ export async function login(): Promise<LoginResult> {
       throw new Error(
         `Create OAuth2 token failed: empty response. Check that (1) Google OAuth provider is enabled in Appwrite Console -> Auth -> Settings with valid OAuth Client ID/Secret, and (2) the platform "${config.platform}" is registered in Appwrite Console -> Overview -> Platforms.`
       );
-
-    if (Platform.OS === "web") {
-      window.location.href = response.toString();
-      return { status: "redirecting" };
-    }
 
     const browserResult = await openAuthSessionAsync(
       response.toString(),
@@ -138,18 +131,6 @@ export async function login(): Promise<LoginResult> {
       error instanceof Error ? error.message : "Failed to login";
     console.log("[login] error:", JSON.stringify(error, null, 2), message);
     return { status: "error", message };
-  }
-}
-
-export async function completeOAuthSession(userId: string, secret: string) {
-  try {
-    const session = await account.createSession(userId, secret);
-    return { status: "success", session } as const;
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to complete login";
-    console.log("[completeOAuthSession]", message);
-    return { status: "error", message } as const;
   }
 }
 
