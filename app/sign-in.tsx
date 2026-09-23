@@ -22,6 +22,7 @@ const Auth = () => {
 
   const handleLogin = async () => {
     const result = await login();
+    if (result.status === "redirecting") return;
     if (result.status === "success") {
       await refetch();
       router.replace("/");
