@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (min-width: 640px) {
+  body {
+    background-color: #e8e8ee;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+}

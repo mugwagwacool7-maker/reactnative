@@ -55,7 +55,7 @@ export default function RootLayout() {
       <View className="flex-1 justify-center items-center bg-white">
         <Image
           source={images.splash}
-          className="w-80 h-80"
+          className="w-56 h-56"
           resizeMode="contain"
         />
         <ActivityIndicator className="mt-5" size="large" color="#191D31" />

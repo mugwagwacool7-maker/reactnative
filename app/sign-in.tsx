@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Alert,
+  Dimensions,
   Image,
   ScrollView,
   Text,
@@ -30,17 +31,24 @@ const Auth = () => {
     }
   };
 
+  const onboardingHeight = Math.max(
+    280,
+    Math.min(Dimensions.get("window").height * 0.42, 380)
+  );
+
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView
         contentContainerStyle={{
-          height: "100%",
+          flexGrow: 1,
+          paddingBottom: 24,
         }}
         showsVerticalScrollIndicator={false}
       >
         <Image
           source={images.onboarding}
-          className="w-full h-[52%]"
+          className="w-full mt-4"
+          style={{ height: onboardingHeight }}
           resizeMode="contain"
         />
 

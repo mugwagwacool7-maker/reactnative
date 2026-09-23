@@ -81,7 +81,11 @@ export const Card = ({ item, onPress }: Props) => {
         </Text>
       </View>
 
-      <Image source={{ uri: item.image }} className="w-full h-40 rounded-lg" />
+      <Image
+        source={{ uri: item.image }}
+        className="w-full rounded-lg"
+        style={{ aspectRatio: 4 / 3 }}
+      />
 
       <View className="flex flex-col mt-2">
         <Text className="text-base font-rubik-bold text-black-300">
